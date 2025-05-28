@@ -1,0 +1,17 @@
+{
+	"name": "Ubuntu",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cmake-tools",
+				"sj0000e.hexdiff"
+			]
+		}
+	},
+	"workspaceFolder": "/workspace",
+	"postCreateCommand": "cmake -S . -B build"
+
+}
