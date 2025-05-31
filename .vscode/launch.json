@@ -2,25 +2,35 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Google Test",
+      "name": "gst-launch (mypassthrough)",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/runTests",
-      "args": [],
+      "program": "/usr/bin/gst-launch-1.0",
+      "args": [
+        "-v",
+        "videotestsrc",
+        "!",
+        "mypassthrough",
+        "!",
+        "fakesink"      // ou autovideosink selon l’environnement graphique
+      ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "setupCommands": [
+      "environment": [
         {
-          "description": "Enable automatic printing",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
+          "name": "GST_PLUGIN_PATH",
+          "value": "${workspaceFolder}/build"
+        },
+        {
+          "name": "GST_DEBUG",
+          "value": "mypassthrough:6"   // verbosité plugin
         }
       ],
-      "preLaunchTask": "build",
-      "miDebuggerPath": "/usr/bin/gdb"
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        { "description": "GDB: activer l’impression automatique", "text": "-enable-pretty-printing" }
+      ]
     }
   ]
 }

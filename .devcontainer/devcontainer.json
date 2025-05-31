@@ -1,17 +1,22 @@
 {
-	"name": "Ubuntu",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "devcontainer",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-vscode.cpptools",
-				"ms-vscode.cmake-tools",
-				"sj0000e.hexdiff"
-			]
-		}
-	},
-	"workspaceFolder": "/workspace",
-	"postCreateCommand": "cmake -S . -B build"
-
+  "name": "gst-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "settings": {
+    // IntelliSense C/C++
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools"      // adaptateur cppdbg
+      ]
+    }
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+  "remoteUser": "vscode"
 }

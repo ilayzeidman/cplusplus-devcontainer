@@ -1,19 +1,14 @@
-FROM ubuntu:24.04
+# Image de base légère + C++ 17
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
-# Install build tools and dependencies
-RUN apt-get update && \
-    apt-get install -y \
-        build-essential \
-        cmake \
-        git \
-        wget \
-        libgtest-dev \
-        libgmock-dev \
-        gdb
+# Dépendances système
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential gdb meson ninja-build pkg-config \
+        libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+        gstreamer1.0-tools gstreamer1.0-plugins-base \
+        gstreamer1.0-plugins-good gstreamer1.0-libav \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Build GoogleTest and GoogleMock (required for Ubuntu 24.04)
-#RUN cd /usr/src/gtest && cmake . && make && cp lib/*.a /usr/lib && \
-#    cd /usr/src/gmock && cmake . && make && cp lib/*.a /usr/lib
-
-# Clean up
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Crée l’utilisateur non-root « vscode » (fourni par l’image de base)
+USER vscode
+WORKDIR /workspaces/${LOCAL_WORKSPACE_FOLDER_NAME}
