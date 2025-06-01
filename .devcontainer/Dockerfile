@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
         gstreamer1.0-tools gstreamer1.0-plugins-base \
         gstreamer1.0-plugins-good gstreamer1.0-libav \
+        libgtest-dev  libgmock-dev cmake \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Crée l’utilisateur non-root « vscode » (fourni par l’image de base)

@@ -12,6 +12,16 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "cmake -S . -B buildtests -DCMAKE_BUILD_TYPE=Debug && cmake --build buildtests",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
     }
   ]
 }

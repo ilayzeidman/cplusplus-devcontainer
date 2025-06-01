@@ -14,9 +14,11 @@
     "vscode": {
       "extensions": [
         "ms-vscode.cpptools"      // adaptateur cppdbg
+        , "ms-vscode.cmake-tools" // pour CMake
       ]
     }
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+
   "remoteUser": "vscode"
 }
