@@ -8,6 +8,8 @@ include_directories(src)
 add_executable(runTests
     src/hello.cpp
     tests/test_hello.cpp
+    src/concepts/enum/enum.hpp
+    tests/test_concept_enum.cpp
 )
 
 target_link_libraries(runTests gtest gtest_main pthread)
