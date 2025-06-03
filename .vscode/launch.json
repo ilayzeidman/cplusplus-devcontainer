@@ -40,7 +40,12 @@
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
-      "environment": [],
+      "environment": [
+        {
+          "name": "GST_PLUGIN_PATH",
+          "value": "${workspaceFolder}/build"
+        }
+      ],      
       "externalConsole": false,
       "MIMode": "gdb",
       "setupCommands": [
