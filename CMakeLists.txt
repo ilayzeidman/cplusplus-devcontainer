@@ -26,8 +26,12 @@ add_executable(runTests
     src/hello.cpp
     tests/test_hello.cpp
     src/concepts/enum/enum.hpp
+    src/http/server.cpp
+    src/gstreamer/gst_pipeline.cpp
     tests/test_concept_enum.cpp
     tests/test_gst_pipeline.cpp
+    tests/test_http_server.cpp
+    tests/utils/pipeline_descriptions.cpp
 )
 
 target_link_libraries(runTests gtest gtest_main pthread ${GSTREAMER_LIBRARIES})

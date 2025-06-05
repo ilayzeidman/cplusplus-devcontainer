@@ -59,7 +59,35 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-      "name": "Debug Google Test (Single Test)",
+      "name": "Debug Google Test (Single Test Change Http Server)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/buildtests/runTests",
+      "args": [
+      "--gtest_filter=HttpServerTest.BasicGet" // Replace with your suite and test name
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+      {
+        "name": "GST_PLUGIN_PATH",
+        "value": "${workspaceFolder}/build"
+      }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+      {
+        "description": "Enable automatic printing",
+        "text": "-enable-pretty-printing",
+        "ignoreFailures": true
+      }
+      ],
+      "preLaunchTask": "build",
+      "miDebuggerPath": "/usr/bin/gdb"
+    },
+     {
+      "name": "Debug Google Test (Single Test Change BitrateVisual)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/buildtests/runTests",

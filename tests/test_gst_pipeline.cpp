@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <gst/gst.h>
 #include <thread>
+#include "utils/pipeline_descriptions.hpp"
+
 
 TEST(MypassthroughTest, PipelineInit) {
     gst_init(nullptr, nullptr);
@@ -200,17 +202,9 @@ TEST(MypassthroughTest, ChangeBitrateVisual_LiveWindow_Threaded) {
     gst_init(nullptr, nullptr);
 
     // Pipeline with live display
-    GstElement *pipeline = gst_parse_launch(
-         "videotestsrc pattern=smpte is-live=true "
-        "! video/x-raw,framerate=30/1,width=1280,height=720 "
-        "! videoconvert "
-        "! videoscale "
-        "! videorate "
-        "! x264enc name=encode tune=zerolatency bitrate=6000 key-int-max=30 "
-        "! avdec_h264 "
-        "! videoconvert "
-        "! ximagesink",
-        NULL);
+    // Define the pipeline description in a header or constants file and include it here
+    extern const char* LIVE_WINDOW_PIPELINE_DESC;
+    GstElement *pipeline = gst_parse_launch(LIVE_WINDOW_PIPELINE_DESC, NULL);
 
     ASSERT_NE(pipeline, nullptr);
 
