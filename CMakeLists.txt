@@ -32,6 +32,8 @@ add_executable(runTests
     tests/test_gst_pipeline.cpp
     tests/test_http_server.cpp
     tests/utils/pipeline_descriptions.cpp
+    tests/test_concepts.cpp
+    src/concepts/shared_pointer/shared_example.hpp
 )
 
 target_link_libraries(runTests gtest gtest_main pthread ${GSTREAMER_LIBRARIES})
