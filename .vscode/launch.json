@@ -115,12 +115,12 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
       {
-      "name": "Debug Google Test (Single Test Change BitrateVisual)",
+      "name": "Debug Google Test (ChangeBitrateAndForceKeyUnit)",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/buildtests/runTests",
       "args": [
-      "--gtest_filter=MypassthroughTest.ChangeBitrateVisual_LiveWindow_Threaded" // Replace with your suite and test name
+      "--gtest_filter=MypassthroughTest.ChangeBitrateAndForceKeyUnit" // Replace with your suite and test name
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

@@ -256,3 +256,71 @@ TEST(MypassthroughTest, ChangeBitrateVisual_LiveWindow_Threaded) {
     gst_object_unref(pipeline);
 }
 
+
+TEST(MypassthroughTest, ChangeBitrateAndForceKeyUnit) {
+    gst_init(nullptr, nullptr);
+
+    extern const char* LIVE_WINDOW_PIPELINE_DESC;
+    GstElement *pipeline = gst_parse_launch(LIVE_WINDOW_PIPELINE_DESC, NULL);
+
+    ASSERT_NE(pipeline, nullptr);
+
+    // Get encoder element
+    GstElement *encoder = gst_bin_get_by_name(GST_BIN(pipeline), "encode");
+    ASSERT_NE(encoder, nullptr);
+
+    // Set pipeline to PLAYING
+    gst_element_set_state(pipeline, GST_STATE_PLAYING);
+
+    // Wait until pipeline is playing
+    GstStateChangeReturn ret = gst_element_get_state(pipeline, NULL, NULL, GST_CLOCK_TIME_NONE);
+    ASSERT_TRUE(ret == GST_STATE_CHANGE_SUCCESS || ret == GST_STATE_CHANGE_ASYNC);
+													
+    std::cout << "Pipeline running at bitrate 6000..." << std::endl;
+
+    g_usleep(3 * G_USEC_PER_SEC);
+
+    // Change bitrate property
+    g_object_set(G_OBJECT(encoder), "bitrate", 200, NULL);
+    std::cout << "Changed bitrate to 200." << std::endl;
+
+    // Wait a bit
+    g_usleep(10 * G_USEC_PER_SEC);
+
+    // Send GstForceKeyUnit event on encoder src pad
+    GstPad *pad = gst_element_get_static_pad(encoder, "src");
+    ASSERT_NE(pad, nullptr);
+
+    GstEvent *event = gst_event_new_custom(
+        GST_EVENT_CUSTOM_UPSTREAM,
+        gst_structure_new("GstForceKeyUnit",
+            "timestamp", G_TYPE_UINT64, GST_CLOCK_TIME_NONE,
+            "all-headers", G_TYPE_BOOLEAN, TRUE,
+            "count", G_TYPE_UINT, 0,
+            NULL
+        )
+    );
+
+    std::cout << "Sending GstForceKeyUnit event upstream on 'encode' src pad..." << std::endl;
+    gboolean res = gst_pad_send_event(pad, event);
+    EXPECT_TRUE(res);
+
+    g_usleep(2 * G_USEC_PER_SEC);
+
+
+    gst_object_unref(pad);
+
+    // Let it play a bit more
+    g_usleep(3 * G_USEC_PER_SEC);
+
+    // Cleanup
+    gst_element_set_state(pipeline, GST_STATE_NULL);
+						   
+					  
+							
+
+    gst_object_unref(encoder);
+    gst_object_unref(pipeline);
+}
+
+
